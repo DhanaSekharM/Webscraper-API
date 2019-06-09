@@ -37,8 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'the_one',
+    'fcm_django',
 ]
 
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": "AAAAP7j4Z1Y:APA91bGZq9b78OOPYMOISte38RP9LkK6nPyg7lewTplx_mq-5NxLLZyNswVSPSnd0y0lAM-LYd-jG75yoPdKBq4MW8sGeMsQBDrC1lFbOQt0kZHR45-bpRYL9LZJtZpldFVx0P0a-N-S",
+    "ONE_DEVICE_PER_USER": True,
+    "DELETE_INACTIVE_DEVICES": False,
+}
+
+# PUSH_NOTIFICATIONS_SETTINGS = {
+#     'FCM_API_KEY':'AAAA1uniEsw:APA91bFi4H_zjEBQBTEqIYLaCx7NmPkpuUJ1yVex3rr59Cd3Vg8naXzcwF0_iDs3pvi-nB6WeUkEsTnWm63gVeByqiwiTzKJmbd2y3NukJ3LGDQjaXS7poXnUTMdRQVc72EdaoLg9B3u',
+#
+# }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
