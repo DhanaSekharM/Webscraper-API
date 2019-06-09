@@ -1,6 +1,6 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup as soup
-from flipkart import scrape
+from .flipkart import scrape
 import http
 import validators
 
