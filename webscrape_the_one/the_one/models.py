@@ -7,3 +7,4 @@ class ProductDetails(models.Model):
     product_url = models.TextField()
     product_price = models.CharField(max_length=255)
     all_time_low = models.CharField(max_length=255)
+    image_url = models.CharField(max_length=255, null=True, default=None)

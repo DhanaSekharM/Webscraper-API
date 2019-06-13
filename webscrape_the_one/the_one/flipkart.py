@@ -1,6 +1,7 @@
 from urllib.request import urlopen as ureq
 from bs4 import BeautifulSoup as soup
 import http
+from re import findall
 
 
 def scrape(product_urls):
@@ -8,6 +9,8 @@ def scrape(product_urls):
     prices = []
     names = []
     ratings = []
+    image_urls = []
+    image_class_names = ['2_AcLJ _3_yGjX', '_2_AcLJ']
     for i in range(n):
 
         try:
@@ -32,7 +35,20 @@ def scrape(product_urls):
         names.append(product_name_list[0].text.replace(",", ""))
         prices.append(int(product_price.replace(",", "")))
 
-    for i in range(n):
-        print(names[i], prices[i], ratings[i])
+        # Product image url
+        for class_name in image_class_names:
+            product_image_url_list = page_soup.findAll("div", {"class": class_name})
+            if (len(product_image_url_list) > 0):
+                image_url = (product_image_url_list[0])['style']
+                image_url = (
+                    findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]| [! * \(\),] | (?: %[0-9a-fA-F][0-9a-fA-F]))+',
+                            image_url))[0]
+                print(image_url)
+                image_urls.append(image_url[0:len(image_url) - 1])
+                break
 
-    return names, prices, ratings
+
+    for i in range(n):
+        print(names[i], prices[i], ratings[i], image_urls[i])
+
+    return names, prices, ratings, image_urls
