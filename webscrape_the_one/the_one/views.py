@@ -13,27 +13,38 @@ from .serializers import ProductDetailsSerializer
 from .Notifications import send_notifications
 from re import findall
 
+from .parallel_fetch import concurrent_map, call_main
+
 
 class Requests(APIView):
 
     def get(self, request):
-        products1 = ProductDetails.objects.get(id=11)
-        products = []
-        products.append(products1)
-        updated_products = []
+        products = ProductDetails.objects.all()
+        products_list = []
+        product_urls = []
+
         for product in list(products):
             updated_product = ProductDetails.objects.get(id=product.id)
-            names, prices, rating, image_urls = main(product=updated_product.product_url)
-            if prices[0] != updated_product.product_price:
-                updated_product.product_price = prices[0]
-            if float(prices[0]) <= float(updated_product.all_time_low):
-                updated_product.all_time_low = prices[0]
-            updated_product.save()
-            updated_products.append(updated_product)
-        # print(updated_products[5].product_name)
-        data = ProductDetailsSerializer(updated_products, many=True)
+            products_list.append(updated_product)
+            product_urls.append(updated_product.product_url)
 
-        send_notifications()
+        return_values = concurrent_map(call_main, product_urls)
+        names, prices, rating, image_urls = [], [], [], []
+        for i in range(len(return_values)):
+            prices.append(return_values[i][1][0])
+
+        print(prices[0])
+
+        for i in range(len(products_list)):
+            if prices[i] != products_list[i].product_price:
+                products_list[i].product_price = prices[i]
+            if float(prices[i]) <= float(products_list[i].all_time_low):
+                products_list[i].all_time_low = prices[i]
+            products_list[i].save()
+        # print(updated_products[5].product_name)
+        data = ProductDetailsSerializer(products_list, many=True)
+
+        # send_notifications()
 
         return JsonResponse(data.data, safe=False)
 
@@ -53,7 +64,7 @@ class Requests(APIView):
                                      all_time_low=price[0],
                                      image_url=image_urls[0])
 
-        # new_product.save()
+        new_product.save()
         print(product_url)
         data = ProductDetailsSerializer(new_product, many=False)
 

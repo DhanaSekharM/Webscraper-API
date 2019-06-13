@@ -1,3 +1,4 @@
+import time
 from urllib.request import urlopen
 from bs4 import BeautifulSoup as soup
 from .flipkart import scrape
@@ -22,7 +23,11 @@ def cat_list(category):
     #     is_category_url = True
     #     return scrape(category)
 
+    # start_time =  time.time()
+    # print('start_time:', start_time)
+
     if validators.url(category):
+        # print('time_taken:', time.time() - start_time)
         return scrape([category, ])
 
     category_url = 'https://www.flipkart.com/search?q=' + category

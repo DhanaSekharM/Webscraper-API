@@ -47,7 +47,6 @@ def scrape(product_urls):
                 image_urls.append(image_url[0:len(image_url) - 1])
                 break
 
-
     for i in range(n):
         print(names[i], prices[i], ratings[i], image_urls[i])
 
