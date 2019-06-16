@@ -2,10 +2,12 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework.views import APIView
 from django.core import serializers
+from rest_framework.views import status
 
 from .models import ProductDetails
 from .main import main
@@ -24,7 +26,7 @@ class Requests(APIView):
         product_urls = []
 
         for product in list(products):
-            updated_product = ProductDetails.objects.get(id=product.id)
+            updated_product = ProductDetails.objects.get(product_id=product.product_id)
             products_list.append(updated_product)
             product_urls.append(updated_product.product_url)
 
@@ -69,3 +71,11 @@ class Requests(APIView):
         data = ProductDetailsSerializer(new_product, many=False)
 
         return JsonResponse(data.data, safe=False)
+
+
+class ProductDeleteView(generics.RetrieveUpdateDestroyAPIView):
+
+    def delete(self, request, *args, **kwargs):
+        product = ProductDetails.objects.get(product_id=kwargs["pk"])
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -3,6 +3,7 @@ from .models import ProductDetails
 
 
 class ProductDetailsSerializer(serializers.Serializer):
+    product_id = serializers.IntegerField()
     product_name = serializers.CharField(max_length=255)
     product_url = serializers.CharField()
     product_price = serializers.CharField(max_length=255)
