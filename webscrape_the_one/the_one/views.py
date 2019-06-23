@@ -13,6 +13,7 @@ from .models import ProductDetails
 from .main import main
 from .serializers import ProductDetailsSerializer
 from .Notifications import send_notifications
+from .tasks import scrape_periodically
 from re import findall
 
 from .parallel_fetch import concurrent_map, call_main
@@ -24,7 +25,8 @@ class Requests(APIView):
         products = ProductDetails.objects.all()
         products_list = []
         product_urls = []
-
+        # send_notifications(title='Title', message='Message')
+        # scrape_periodically.delay()
         for product in list(products):
             updated_product = ProductDetails.objects.get(product_id=product.product_id)
             products_list.append(updated_product)
