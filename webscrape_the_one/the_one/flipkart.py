@@ -5,6 +5,7 @@ from re import findall
 
 
 def scrape(product_urls):
+    print('flipkart')
     n = len(product_urls)
     prices = []
     names = []
