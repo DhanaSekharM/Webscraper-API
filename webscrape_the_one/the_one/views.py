@@ -30,12 +30,14 @@ class Requests(APIView):
             products_list.append(updated_product)
             product_urls.append(updated_product.product_url)
         start_time = time.time()
-        return_values = parallel_map(call, product_urls)
+        return_values = concurrent_map(call_main, product_urls)
+        print('url', return_values[1][1][0])
         endtime = time.time() - start_time
+        print(endtime)
         names, prices, rating, image_urls = [], [], [], []
-        # print(return_values)
+
         for i in range(len(return_values)):
-            prices.append(return_values[i][1][0])
+            prices.append(return_values[i][0][1][0])
 
         print(prices[0])
 

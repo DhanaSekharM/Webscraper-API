@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from celery.schedules import crontab
-
+from .local_settings import FCM_SERVER_KEY, SECRET_KEY as sk
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c0#fuc-fsceg_4p-e9e*pm!-p=oi)@7om!u)51uv=#^dud=!)m'
+SECRET_KEY = sk
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 ]
 
 FCM_DJANGO_SETTINGS = {
-    "FCM_SERVER_KEY": "AAAAP7j4Z1Y:APA91bGZq9b78OOPYMOISte38RP9LkK6nPyg7lewTplx_mq-5NxLLZyNswVSPSnd0y0lAM-LYd-jG75yoPdKBq4MW8sGeMsQBDrC1lFbOQt0kZHR45-bpRYL9LZJtZpldFVx0P0a-N-S",
+    "FCM_SERVER_KEY": FCM_SERVER_KEY,
     "ONE_DEVICE_PER_USER": True,
     "DELETE_INACTIVE_DEVICES": False,
 }

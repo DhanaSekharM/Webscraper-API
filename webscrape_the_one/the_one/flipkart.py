@@ -51,4 +51,4 @@ def scrape(product_urls):
     for i in range(n):
         print(names[i], prices[i], ratings[i], image_urls[i])
 
-    return names, prices, ratings, image_urls
+    return names, prices, ratings, image_urls, product_urls
